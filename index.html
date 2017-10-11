@@ -177,39 +177,10 @@ and open the template in the editor.
                     VLeft *= -1;
                 }
                 
-
-                
-                if(leftBalle > 1382 && topBalle + 20 >= J2 && topBalle + 20 <= J2 + 70){
-                    topBalle = J2 - (20 + (V-1));
-                    VTop *= -1;
-                    VLeft *= -1;
-                }
-                
-                if(leftBalle > 1382 && topBalle >= J2 && topBalle <= J2 + 70){
-                    topBalle = J2 + (70 +  (V-1));
-                    VTop *= -1;
-                    VLeft *= -1;
-                }
-                
-
-                
                 if(leftBalle <= 550 && leftBalle >= 548 && ((topBalle >= J1 && topBalle <= J1 + 70) || (topBalle + 20 >= J1 && topBalle + 20 <= J1 + 70))){
                     leftBalle = 550 + (V-1);
                     VLeft *= -1;
                     
-                }
-                
-               if(leftBalle < 550 && topBalle + 20 >= J1 && topBalle + 20 <= J1 + 70){
-                    topBalle = J1 - (20 + (V-1));
-                    VTop *= -1;
-                    VLeft *= -1;
-                    
-                }
-                
-                if(leftBalle < 550 && topBalle >= J1 && topBalle <= J1 + 70){
-                    topBalle = J1 + 70 + (V-1);
-                    VTop *= -1;
-                    VLeft *= -1;
                 }
                 
                 if(leftBalle >= 1400){
