@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Pong</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            body{width: 1899px}
+            h1{display:inline}
+        </style>
+    </head>
+    <body>
+
+        <div style="width: 100%"> <h2 style="font-size: 60px; margin-bottom: -15px; margin-top: 0px; padding-left: 810px;">SCORES</h2> </div> 
+        <div style="margin-bottom: 41px; padding-left: 875px;">
+            <h1 style="font-size: 60px" id="J1score">0</h1>
+            <h1 style="font-size: 80px">||</h1>
+            <h1 style="font-size: 60px" id="J2score">0</h1>
+        </div>
+        <div id="terrain" style="height: 500px; width: 900px; border: solid lime 12px; background-color: black; margin-left: 500px;">
+            <div id="J1" style="height: 70px; width: 30px; border: solid lime 0.5px; background-color: lime; position: absolute; left:520px; top:435px"></div>
+            <div id="balle" style="height: 20px; width: 20px; border-radius: 50px; position: absolute; left: 950px; top: 460px; background-color: lime"></div>
+            <div id="J2" style="height: 70px; width: 30px; border: solid lime 0.5px; background-color: lime; position: absolute; left: 1390px; top: 435px"></div>
+        </div>
+        <script type="text/javascript">
+            var leftBalle = 950;
+            var topBalle = 460;
+            var botBalle = topBalle+20;
+            var J1 = 435;
+            var J1Bas = J1 + 70;
+            var J2 = 435;
+            var J2Bas = J2 + 70;
+            var movJ1 = 0;
+            var movJ2 = 0;
+            var V = 3;
+            var VTop = V;
+            var VLeft = V;
+            var balle = document.getElementById("balle");
+            var scoreJ1 = 0;
+            var scoreJ2 = 0;
+            var J1Y = document.getElementById("J1");
+            var J2Y = document.getElementById("J2");
+            var pause = false;
+            var VtmpY = VTop;
+            var VtmpX = VLeft;
+              
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'KeyS' && pause !== true) {
+                    movJ1 = 10;
+                }
+                
+                if (event.code === 'KeyW' && pause !== true) {
+                    movJ1 = -10;
+                }
+
+                if (event.code === 'KeyL' && pause !== true) {
+                    movJ2 = 10;
+                }
+                
+                if (event.code === 'KeyO' && pause !== true) {
+                    movJ2 = -10;
+                }
+                
+                if (event.code === 'KeyI') {
+                    VLeft = V;
+                }
+                if (event.code === 'KeyY') {
+                    VLeft = -V;
+                }
+                if(event.code === 'KeyU') {
+                    VTop = -V;
+                }
+                if(event.code === 'KeyG') {
+                    V -= 1;
+                }
+                if (event.code === 'KeyH') {
+                    V += 1;
+                }
+                if (event.code === 'KeyJ') {
+                    VTop = V;
+                }
+                if (event.code === 'KeyN') {
+                    VTop = 0;
+                    VLeft = 0;
+                }
+            });
+            
+            document.addEventListener('keyup', function(event) {
+                if (event.code === 'KeyS') {
+                    if(J1 >= 645){
+                        J1 = 645;
+                        movJ1 = 0;
+                    }else{
+                        movJ1 = 0;
+                    }
+                }
+                if (event.code === 'KeyW') {
+                    if(J1 <= 213){
+                        J1 = 213;
+                        movJ1 = 0;
+                    }else{
+                        movJ1 = 0;
+                    }
+                }
+
+                if (event.code === 'KeyL') {
+                    if(J2 >= 645){
+                        J2 = 645;
+                        movJ2 = 0;
+                    }else{
+                        movJ2 = 0;
+                    }
+                }
+                if (event.code === 'KeyO') {
+                    if(J2 <= 213){
+                        J2 = 213;
+                        movJ2 = 0;
+                    }else{
+                        movJ2 = 0;
+                    }
+                }
+            });
+            
+            document.addEventListener('keypress', function(event) {
+                if(event.code === 'KeyP'){
+                    pause = !pause;
+                    if (pause === true){
+                        VtmpY = VTop;
+                        VtmpX = VLeft;
+                        VTop = 0;
+                        VLeft = 0;
+                        console.log("Pause");
+                    }else {
+                        VTop = VtmpY;
+                        VLeft = VtmpX;
+                        console.log("Reprise");
+                    }
+                }
+            });
+            
+            
+            setInterval(function(){
+                if(J1 >= 645){
+                    J1 = 645;
+                }
+                
+                if(J1 <= 213){
+                    J1 = 213;
+                }
+                
+                if(J2 >= 645){
+                    J2 = 645;
+                }
+                
+                if(J2 <= 213){
+                    J2 = 213;
+                }
+                
+                if(topBalle >= 695 || topBalle <= 213){
+                    if(topBalle >= 695){
+                        topBalle = 695;
+                    }
+                    if(topBalle <= 213){
+                        topBalle = 213;
+                    }
+                    VTop *= -1;
+                }
+                
+                if(leftBalle >= (1372 - (V-1)) && leftBalle <= 1372 && ((topBalle >= J2 && topBalle <= J2 + 70) || (topBalle + 20 >= J2 && topBalle + 20 <= J2 + 70))){
+                    leftBalle = 1372 - (V-1);
+                    VLeft *= -1;
+                }
+                
+
+                
+                if(leftBalle > 1382 && topBalle + 20 >= J2 && topBalle + 20 <= J2 + 70){
+                    topBalle = J2 - (20 + (V-1));
+                    VTop *= -1;
+                    VLeft *= -1;
+                }
+                
+                if(leftBalle > 1382 && topBalle >= J2 && topBalle <= J2 + 70){
+                    topBalle = J2 + (70 +  (V-1));
+                    VTop *= -1;
+                    VLeft *= -1;
+                }
+                
+
+                
+                if(leftBalle <= 550 && leftBalle >= 548 && ((topBalle >= J1 && topBalle <= J1 + 70) || (topBalle + 20 >= J1 && topBalle + 20 <= J1 + 70))){
+                    leftBalle = 550 + (V-1);
+                    VLeft *= -1;
+                    
+                }
+                
+               if(leftBalle < 550 && topBalle + 20 >= J1 && topBalle + 20 <= J1 + 70){
+                    topBalle = J1 - (20 + (V-1));
+                    VTop *= -1;
+                    VLeft *= -1;
+                    
+                }
+                
+                if(leftBalle < 550 && topBalle >= J1 && topBalle <= J1 + 70){
+                    topBalle = J1 + 70 + (V-1);
+                    VTop *= -1;
+                    VLeft *= -1;
+                }
+                
+                if(leftBalle >= 1400){
+                    
+                    scoreJ1 ++;
+                    document.getElementById('J1score').innerHTML = scoreJ1;
+                    alert('J1 marque !');
+                    leftBalle = 950;
+                    topBalle = 450;
+                    J1 = 435;
+                    J2 = 435;
+                    Vleft = V;
+                    if (Math.random() > .5){
+                        VTop = -V;
+                    } else{
+                        VTop = V;
+                    };
+                    
+                }
+                
+                if(leftBalle <= 520){
+                    scoreJ2 ++;
+                    document.getElementById('J2score').innerHTML = scoreJ2;
+                    alert('J2 marque !');
+                    leftBalle = 950;
+                    topBalle = 450;
+                    J1 = 435;
+                    J2 = 435;
+                    Vleft = -V;
+                    if (Math.random() > .5){
+                        VTop = -V;
+                    } else{
+                        VTop = V;
+                    };
+                    
+                }
+                
+                
+                
+                J1 += movJ1;
+                J2 += movJ2;
+                
+                topBalle += VTop;
+                leftBalle += VLeft;
+                balle.style.top = topBalle + "px";
+                balle.style.left = leftBalle + "px";
+                J1Y.style.top = J1 + "px";
+                J2Y.style.top = J2 + "px";
+                
+            }, 1000/80);
+        </script>
+        
+    </body>
+</html>
+
